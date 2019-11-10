@@ -2,6 +2,7 @@ import fs from 'fs';
 import Jimp = require('jimp');
 import axios from 'axios';
 import path from 'path';
+import { NextFunction, Request, Response } from 'express';
 
 import multer from 'multer';
 export const storage = multer.diskStorage({
@@ -46,6 +47,8 @@ export const VALID_IMAGE_FILE_EXTENSIONS = [
     '.tiff', 
     '.bmp' 
 ]
+
+const TEST_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsIm5hbWUiOm51bGwsImdpdmVuX25hbWUiOm51bGwsImZhbWlseV9uYW1lIjpudWxsLCJtaWRkbGVfbmFtZSI6bnVsbCwibmlja25hbWUiOm51bGwsInByZWZlcnJlZF91c2VybmFtZSI6bnVsbCwicHJvZmlsZSI6bnVsbCwicGljdHVyZSI6bnVsbCwid2Vic2l0ZSI6bnVsbCwiZW1haWwiOm51bGwsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZ2VuZGVyIjpudWxsLCJiaXJ0aGRhdGUiOm51bGwsInpvbmVpbmZvIjpudWxsLCJsb2NhbGUiOm51bGwsInBob25lX251bWJlciI6bnVsbCwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjpmYWxzZSwiYWRkcmVzcyI6bnVsbCwidXBkYXRlZF9hdCI6MH0.rvINF7r3HDoIl8jwHYPxK23TSx90eOkLilyCYrzPRqY';
 
 // filterImageFromURL
 // helper function to download, filter, and save the filtered image locally
@@ -146,4 +149,26 @@ export function getUploadedFiles () {
 //    Array<string> an array of absolute paths to files
 function getDirectoryContent (directoryPath:string) {
     return fs.readdirSync(directoryPath);
+}
+
+// requireAuth
+// middleware to check if user is authenticated
+// INPUTS
+//    request: Request;
+//    response: Response;
+//    next: NextFunction;
+// RETURNS
+//    next method
+export function requireAuth (request: Request, response: Response, next: NextFunction) {
+    if (!request.headers || !request.headers.authorization) {
+        return response.status(401).send({ message: 'No authorization header.' })
+    }
+
+    const tokenBearer = request.headers.authorization.split(' ')[1];
+
+    if (tokenBearer !== TEST_TOKEN) {
+        response.status(500).send('Failed to authenticate');
+    } else {
+        next();
+    }
 }

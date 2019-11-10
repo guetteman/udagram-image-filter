@@ -1,7 +1,7 @@
 import path from 'path';
 import express, { response } from 'express';
 import bodyParser from 'body-parser';
-import {filterImageFromURL, deleteLocalFiles, imageExists, isValidImageFileExt, storage, fileFilter, getTempFiles, getUploadedFiles} from './util/util';
+import {filterImageFromURL, deleteLocalFiles, imageExists, isValidImageFileExt, storage, fileFilter, getTempFiles, getUploadedFiles, requireAuth} from './util/util';
 import multer from 'multer';
 let upload = multer({storage: storage, fileFilter: fileFilter});
 
@@ -25,7 +25,7 @@ let upload = multer({storage: storage, fileFilter: fileFilter});
 
     /**************************************************************************** */
 
-    app.get( "/filteredimage", async (request, response) => {
+    app.get( "/filteredimage", requireAuth, async (request, response) => {
         let isValid, filteredImagePath;
         try {
             isValid = await imageExists(request.query.image_url);
@@ -48,6 +48,7 @@ let upload = multer({storage: storage, fileFilter: fileFilter});
     app.post(
         '/filter-image', 
         upload.single('file'),
+        requireAuth,
         async (request, response) => {
             
             if (!request.file || !isValidImageFileExt(path.extname(request.file.originalname))) {
@@ -66,7 +67,7 @@ let upload = multer({storage: storage, fileFilter: fileFilter});
     // endpoint to delete temp. and uploaded files
     // RETURNS
     //    String response
-    app.post('/clear-files', async (request, response) => {
+    app.post('/clear-files', requireAuth, async (request, response) => {
         deleteLocalFiles(getTempFiles());
         deleteLocalFiles(getUploadedFiles());
         response.send('All image files have been removed');
@@ -74,7 +75,7 @@ let upload = multer({storage: storage, fileFilter: fileFilter});
     
     // Root Endpoint
     // Displays a simple message to the user
-    app.get( "/", async ( req, res ) => {
+    app.get( "/", requireAuth, async ( req, res ) => {
         res.send("try GET /filteredimage?image_url={{}}")
     } );
   

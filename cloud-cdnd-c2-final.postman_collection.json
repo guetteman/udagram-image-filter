@@ -8,6 +8,16 @@
 		{
 			"name": "http://localhost:8082/filteredimage?image_url=https://timedotcom.files.wordpress.com/2019/03/kitten-report.jpg",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsIm5hbWUiOm51bGwsImdpdmVuX25hbWUiOm51bGwsImZhbWlseV9uYW1lIjpudWxsLCJtaWRkbGVfbmFtZSI6bnVsbCwibmlja25hbWUiOm51bGwsInByZWZlcnJlZF91c2VybmFtZSI6bnVsbCwicHJvZmlsZSI6bnVsbCwicGljdHVyZSI6bnVsbCwid2Vic2l0ZSI6bnVsbCwiZW1haWwiOm51bGwsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZ2VuZGVyIjpudWxsLCJiaXJ0aGRhdGUiOm51bGwsInpvbmVpbmZvIjpudWxsLCJsb2NhbGUiOm51bGwsInBob25lX251bWJlciI6bnVsbCwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjpmYWxzZSwiYWRkcmVzcyI6bnVsbCwidXBkYXRlZF9hdCI6MH0.rvINF7r3HDoIl8jwHYPxK23TSx90eOkLilyCYrzPRqY",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -32,6 +42,16 @@
 		{
 			"name": "http://localhost:8082/filter-image",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsIm5hbWUiOm51bGwsImdpdmVuX25hbWUiOm51bGwsImZhbWlseV9uYW1lIjpudWxsLCJtaWRkbGVfbmFtZSI6bnVsbCwibmlja25hbWUiOm51bGwsInByZWZlcnJlZF91c2VybmFtZSI6bnVsbCwicHJvZmlsZSI6bnVsbCwicGljdHVyZSI6bnVsbCwid2Vic2l0ZSI6bnVsbCwiZW1haWwiOm51bGwsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZ2VuZGVyIjpudWxsLCJiaXJ0aGRhdGUiOm51bGwsInpvbmVpbmZvIjpudWxsLCJsb2NhbGUiOm51bGwsInBob25lX251bWJlciI6bnVsbCwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjpmYWxzZSwiYWRkcmVzcyI6bnVsbCwidXBkYXRlZF9hdCI6MH0.rvINF7r3HDoIl8jwHYPxK23TSx90eOkLilyCYrzPRqY",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -46,7 +66,7 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": []
+							"src": "/Users/luisguette/Documents/sigma-logo.pdf"
 						}
 					]
 				},
@@ -66,6 +86,16 @@
 		{
 			"name": "http://localhost:8082/clear-files",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsIm5hbWUiOm51bGwsImdpdmVuX25hbWUiOm51bGwsImZhbWlseV9uYW1lIjpudWxsLCJtaWRkbGVfbmFtZSI6bnVsbCwibmlja25hbWUiOm51bGwsInByZWZlcnJlZF91c2VybmFtZSI6bnVsbCwicHJvZmlsZSI6bnVsbCwicGljdHVyZSI6bnVsbCwid2Vic2l0ZSI6bnVsbCwiZW1haWwiOm51bGwsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZ2VuZGVyIjpudWxsLCJiaXJ0aGRhdGUiOm51bGwsInpvbmVpbmZvIjpudWxsLCJsb2NhbGUiOm51bGwsInBob25lX251bWJlciI6bnVsbCwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjpmYWxzZSwiYWRkcmVzcyI6bnVsbCwidXBkYXRlZF9hdCI6MH0.rvINF7r3HDoIl8jwHYPxK23TSx90eOkLilyCYrzPRqY",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{

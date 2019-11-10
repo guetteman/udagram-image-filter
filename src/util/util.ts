@@ -2,6 +2,14 @@ import fs from 'fs';
 import Jimp = require('jimp');
 import axios from 'axios';
 
+const VALID_IMAGE_FORMATS = [
+    'image/gif',   
+    'image/jpeg',   
+    'image/png',   
+    'image/tiff', 
+    'image/bmp' 
+]
+
 // filterImageFromURL
 // helper function to download, filter, and save the filtered image locally
 // returns the absolute path to the local image
@@ -40,15 +48,25 @@ export async function deleteLocalFiles(files:Array<string>){
 //    imageUrl: String image url;
 // RETURNS
 //    a Boolean
-export async function imageExists(imageUrl:any) {
+export async function imageExists(imageUrl:string) {
     let exists;
 
     try {
         let response = await axios.head(imageUrl);
-        exists = response.status === 200 && response.headers['content-type'].includes('image'); 
+        exists = response.status === 200 && isValidImageFormat(response.headers['content-type']); 
     } catch (e) {
         exists = false;
     }
     
     return exists;
+}
+
+// isValidImageFormat
+// helper function to check if image header format is valid
+// INPUTS
+//    format: String 'content-type' header;
+// RETURNS
+//    a Boolean
+function isValidImageFormat (format:string) {
+    return VALID_IMAGE_FORMATS.includes(format);
 }

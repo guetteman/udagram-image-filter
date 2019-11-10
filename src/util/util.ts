@@ -1,6 +1,7 @@
 import fs from 'fs';
 import Jimp = require('jimp');
 import axios from 'axios';
+import path from 'path';
 
 import multer from 'multer';
 export const storage = multer.diskStorage({
@@ -22,7 +23,7 @@ export function fileFilter (req:any, file:any, cb:any) {
     // The function should call `cb` with a boolean
     // to indicate if the file should be accepted
     // To reject this file pass `false`, like so:
-    if (!file) {
+    if (!file || !isValidImageFileExt(path.extname(file.originalname))) {
         cb(null, false)
     } else {
         cb(null, true)

@@ -1,6 +1,9 @@
-import express from 'express';
+import path from 'path';
+import express, { response } from 'express';
 import bodyParser from 'body-parser';
-import {filterImageFromURL, deleteLocalFiles, imageExists} from './util/util';
+import {filterImageFromURL, deleteLocalFiles, imageExists, isValidImageFileExt, storage} from './util/util';
+import multer from 'multer';
+let upload = multer({storage: storage});
 
 (async () => {
 
@@ -13,16 +16,9 @@ import {filterImageFromURL, deleteLocalFiles, imageExists} from './util/util';
     // Use the body parser middleware for post requests
     app.use(bodyParser.json());
 
-    // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
     // GET /filteredimage?image_url={{URL}}
     // endpoint to filter an image from a public url.
-    // IT SHOULD
-    //    1
-    //    1. validate the image_url query
-    //    2. call filterImageFromURL(image_url) to filter the image
-    //    3. send the resulting file in the response
-    //    4. deletes any files on the server on finish of the response
-    // QUERY PARAMATERS
+    // PARAMS
     //    image_url: URL of a publicly accessible image
     // RETURNS
     //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
@@ -45,8 +41,27 @@ import {filterImageFromURL, deleteLocalFiles, imageExists} from './util/util';
         }
     });
 
-    //! END @TODO1
-    
+    // POST /filter-image
+    // upload image and filter
+    // RETURNS
+    //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
+    app.post(
+        '/filter-image', 
+        upload.single('file'),
+        async (request, response) => {
+            
+            if (!isValidImageFileExt(path.extname(request.file.originalname))) {
+                response
+                    .status(403)
+                    .contentType('text/plain')
+                    .end('This is a not valid image file');
+            }
+
+            const filteredImagePath = await filterImageFromURL(path.join(__dirname, '../', request.file.path));
+            response.sendFile(filteredImagePath); 
+        }
+    )
+
     // Root Endpoint
     // Displays a simple message to the user
   app.get( "/", async ( req, res ) => {

@@ -2,12 +2,37 @@ import fs from 'fs';
 import Jimp = require('jimp');
 import axios from 'axios';
 
-const VALID_IMAGE_FORMATS = [
+import multer from 'multer';
+export const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './uploads');
+    },
+    filename: (req, file, cb) => {
+        var filetype = '';
+
+        if (VALID_IMAGE_FORMATS.includes(file.mimetype)) {
+            filetype = file.mimetype.split('/')[1];
+        }
+        
+        cb(null, 'image-' + Date.now() + '.' + filetype);
+    }
+});
+
+
+export const VALID_IMAGE_FORMATS = [
     'image/gif',   
     'image/jpeg',   
     'image/png',   
     'image/tiff', 
     'image/bmp' 
+]
+
+export const VALID_IMAGE_FILE_EXTENSIONS = [
+    '.gif',   
+    '.jpeg',   
+    '.png',   
+    '.tiff', 
+    '.bmp' 
 ]
 
 // filterImageFromURL
@@ -59,6 +84,16 @@ export async function imageExists(imageUrl:string) {
     }
     
     return exists;
+}
+
+// isValidImageExt
+// helper function to check if image file extension is valid
+// INPUTS
+//    fileExt: String file extension;
+// RETURNS
+//    a Boolean
+export function isValidImageFileExt (fileExt:string) {
+    return VALID_IMAGE_FILE_EXTENSIONS.includes(fileExt);
 }
 
 // isValidImageFormat

@@ -18,6 +18,17 @@ export const storage = multer.diskStorage({
     }
 });
 
+export function fileFilter (req:any, file:any, cb:any) {
+    // The function should call `cb` with a boolean
+    // to indicate if the file should be accepted
+    // To reject this file pass `false`, like so:
+    if (!file) {
+        cb(null, false)
+    } else {
+        cb(null, true)
+    }
+  }
+
 
 export const VALID_IMAGE_FORMATS = [
     'image/gif',   

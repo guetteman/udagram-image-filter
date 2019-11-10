@@ -1,9 +1,9 @@
 import path from 'path';
 import express, { response } from 'express';
 import bodyParser from 'body-parser';
-import {filterImageFromURL, deleteLocalFiles, imageExists, isValidImageFileExt, storage} from './util/util';
+import {filterImageFromURL, deleteLocalFiles, imageExists, isValidImageFileExt, storage, fileFilter} from './util/util';
 import multer from 'multer';
-let upload = multer({storage: storage});
+let upload = multer({storage: storage, fileFilter: fileFilter});
 
 (async () => {
 
@@ -50,8 +50,8 @@ let upload = multer({storage: storage});
         upload.single('file'),
         async (request, response) => {
             
-            if (!isValidImageFileExt(path.extname(request.file.originalname))) {
-                response
+            if (!request.file || !isValidImageFileExt(path.extname(request.file.originalname))) {
+                return response
                     .status(403)
                     .contentType('text/plain')
                     .end('This is a not valid image file');

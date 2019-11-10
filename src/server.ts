@@ -1,7 +1,7 @@
 import path from 'path';
 import express, { response } from 'express';
 import bodyParser from 'body-parser';
-import {filterImageFromURL, deleteLocalFiles, imageExists, isValidImageFileExt, storage, fileFilter} from './util/util';
+import {filterImageFromURL, deleteLocalFiles, imageExists, isValidImageFileExt, storage, fileFilter, getTempFiles, getUploadedFiles} from './util/util';
 import multer from 'multer';
 let upload = multer({storage: storage, fileFilter: fileFilter});
 
@@ -42,7 +42,7 @@ let upload = multer({storage: storage, fileFilter: fileFilter});
     });
 
     // POST /filter-image
-    // upload image and filter
+    // endpoint to upload image and filter
     // RETURNS
     //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
     app.post(
@@ -62,8 +62,16 @@ let upload = multer({storage: storage, fileFilter: fileFilter});
         }
     )
 
+    // POST /clear-files
+    // endpoint to delete temp. and uploaded files
+    // RETURNS
+    //    String response
+    app.post('/clear-files', async (request, response) => {
+        deleteLocalFiles(getTempFiles());
+        deleteLocalFiles(getUploadedFiles());
+        response.send('All image files have been removed');
+    });
     
-
     // Root Endpoint
     // Displays a simple message to the user
     app.get( "/", async ( req, res ) => {

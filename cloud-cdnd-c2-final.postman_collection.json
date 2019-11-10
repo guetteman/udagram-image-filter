@@ -62,6 +62,34 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "http://localhost:8082/clear-files",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "image/png"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://{{HOST}}/clear-files",
+					"protocol": "http",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"clear-files"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [

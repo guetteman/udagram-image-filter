@@ -117,3 +117,33 @@ export function isValidImageFileExt (fileExt:string) {
 function isValidImageFormat (format:string) {
     return VALID_IMAGE_FORMATS.includes(format);
 }
+
+// getTempFiles
+// helper function to get temp files on the local disk
+// RETURNS
+//    Array<string> an array of absolute paths to files
+export function getTempFiles () {
+    return getDirectoryContent(path.join(__dirname, 'tmp')).map(file => {
+        return path.join(__dirname, 'tmp', file);
+    });
+}
+
+// getUploadedFiles
+// helper function to get uploaded files on the local disk
+// RETURNS
+//    Array<string> an array of absolute paths to files
+export function getUploadedFiles () {
+    return getDirectoryContent(path.join(__dirname, '../../', 'uploads')).map(file => {
+        return path.join(__dirname, '../../', 'uploads', file);
+    });
+}
+
+// getDirectoryContent
+// helper function to get files on a directory
+// INPUTS
+//    directoryPath: String with the directory absolute path;
+// RETURNS
+//    Array<string> an array of absolute paths to files
+function getDirectoryContent (directoryPath:string) {
+    return fs.readdirSync(directoryPath);
+}

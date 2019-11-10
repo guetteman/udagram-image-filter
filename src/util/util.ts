@@ -1,5 +1,6 @@
 import fs from 'fs';
 import Jimp = require('jimp');
+import axios from 'axios';
 
 // filterImageFromURL
 // helper function to download, filter, and save the filtered image locally
@@ -31,4 +32,23 @@ export async function deleteLocalFiles(files:Array<string>){
     for( let file of files) {
         fs.unlinkSync(file);
     }
+}
+
+// imageExists
+// helper function to check if image exists and is valid
+// INPUTS
+//    imageUrl: String image url;
+// RETURNS
+//    a Boolean
+export async function imageExists(imageUrl:any) {
+    let exists;
+
+    try {
+        let response = await axios.head(imageUrl);
+        exists = response.status === 200 && response.headers['content-type'].includes('image'); 
+    } catch (e) {
+        exists = false;
+    }
+    
+    return exists;
 }

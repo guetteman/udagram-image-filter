@@ -3,6 +3,8 @@ import express, { response } from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles, imageExists, isValidImageFileExt, storage, fileFilter, getTempFiles, getUploadedFiles, requireAuth} from './util/util';
 import multer from 'multer';
+
+let appRoot = require('app-root-path');
 let upload = multer({storage: storage, fileFilter: fileFilter});
 
 (async () => {
@@ -58,7 +60,7 @@ let upload = multer({storage: storage, fileFilter: fileFilter});
                     .end('This is a not valid image file');
             }
 
-            const filteredImagePath = await filterImageFromURL(path.join(__dirname, '../', request.file.path));
+            const filteredImagePath = await filterImageFromURL(path.join(appRoot.path, request.file.path));
             response.sendFile(filteredImagePath); 
         }
     )

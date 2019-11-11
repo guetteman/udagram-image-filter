@@ -4,6 +4,8 @@ import axios from 'axios';
 import path from 'path';
 import { NextFunction, Request, Response } from 'express';
 
+let appRoot = require('app-root-path');
+
 import multer from 'multer';
 export const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -136,8 +138,8 @@ export function getTempFiles () {
 // RETURNS
 //    Array<string> an array of absolute paths to files
 export function getUploadedFiles () {
-    return getDirectoryContent(path.join(__dirname, '../../', 'uploads')).map(file => {
-        return path.join(__dirname, '../../', 'uploads', file);
+    return getDirectoryContent(path.join(appRoot.path, 'uploads')).map(file => {
+        return path.join(appRoot.path, 'uploads', file);
     });
 }
 

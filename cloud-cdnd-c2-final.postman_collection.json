@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:8082/filteredimage?image_url=https://timedotcom.files.wordpress.com/2019/03/kitten-report.jpg",
+			"name": "http://img-filter.guetteluis.com/filteredimage?image_url=https://timedotcom.files.wordpress.com/2019/03/kitten-report.jpg",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -40,7 +40,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8082/filter-image",
+			"name": "http://img-filter.guetteluis.com/filter-image",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -66,7 +66,7 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/Users/luisguette/Documents/sigma-logo.pdf"
+							"src": "/Users/luisguette/Desktop/download.jpeg"
 						}
 					]
 				},
@@ -84,7 +84,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8082/clear-files",
+			"name": "http://img-filter.guetteluis.com/clear-files",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -146,9 +146,9 @@
 	],
 	"variable": [
 		{
-			"id": "1df3d31a-de30-494b-a3d0-f1228dd8713c",
+			"id": "222a53ca-90be-48fe-a6da-2eb6603c6d0b",
 			"key": "HOST",
-			"value": "localhost:8082",
+			"value": "img-filter.guetteluis.com",
 			"type": "string"
 		}
 	]
